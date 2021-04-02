@@ -30,7 +30,7 @@ const invertedButtonStyles = css`
   border: 1px solid black;
 
   &:hover {
-    background-color: rgb(22, 160, 133);
+    background-color: ${(props) => (props.danger ? '#d9584f' : 'rgb(22, 160, 133) ')};
     color: white;
     border: 1px solid transparent;
   }
@@ -46,11 +46,16 @@ const getButtonStyles = (props) => {
   if (props.disabled) {
     return disabledButtonStyles;
   }
+
+  if (props.inverted) {
+    return invertedButtonStyles;
+  }
+
   if (props.danger) {
     return dangerButtonStyles;
   }
 
-  return props.inverted ? invertedButtonStyles : buttonStyles;
+  return buttonStyles;
 };
 
 const ButtonContainer = styled.button`

@@ -1,5 +1,5 @@
-import React from 'react';
-import { readAsset } from '../../services/assetsServices';
+import React, { useState } from 'react';
+import { deleteAsset, readAsset } from '../../services/assetsServices';
 import useRequest from '../../hooks/useRequest';
 import Flex from '../../components/Container/Flex.style';
 import Row from '../../components/Container/Row.styles';
@@ -8,8 +8,11 @@ import Button from '../../components/Button/Button.component';
 import Text from '../../components/Text/Text.styles';
 import Heading from '../../components/Text/Heading.styles';
 import formatDate from '../../utils/formatDate';
+import Modal from '../../components/Modal/Modal.component';
 
 const Products = ({ id }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const { data, isLoading, isRejected } = useRequest(
     id,
     readAsset('product', id),
@@ -39,7 +42,14 @@ const Products = ({ id }) => {
           <Heading horizontalLine>{data?.name}</Heading>
           <Flex width="auto">
             <Button m="0 2rem">Edit</Button>
-            <Button danger>Remove</Button>
+            <Button
+              danger
+              onClick={() => {
+                setIsModalOpen(true);
+              }}
+            >
+              Remove
+            </Button>
           </Flex>
         </Row>
 
@@ -50,9 +60,7 @@ const Products = ({ id }) => {
             </Text>
           </Row>
           <Row>
-            <Text>
-              code: {data?.code}
-            </Text>
+            <Text>code: {data?.code}</Text>
           </Row>
           <Row>
             <Text>price: ${data?.price}</Text>
@@ -66,24 +74,16 @@ const Products = ({ id }) => {
             </Text>
           </Row>
           <Row>
-            <Text>
-              name: {data?.soldBy.name}
-            </Text>
+            <Text>name: {data?.soldBy.name}</Text>
           </Row>
           <Row>
-            <Text>
-              cnpj: {data?.soldBy.cnpj}
-            </Text>
+            <Text>cnpj: {data?.soldBy.cnpj}</Text>
           </Row>
           <Row>
-            <Text>
-              address: {data?.soldBy.address}
-            </Text>
+            <Text>address: {data?.soldBy.address}</Text>
           </Row>
           <Row>
-            <Text>
-              Member since: { formatDate(data?.soldBy.dateJoined) }
-            </Text>
+            <Text>Member since: {formatDate(data?.soldBy.dateJoined)}</Text>
           </Row>
         </Flex>
 
@@ -101,6 +101,24 @@ const Products = ({ id }) => {
             ))) || <Text>None</Text>}
         </Flex>
       </Flex>
+
+      <Modal
+        hidden={!isModalOpen}
+        title={`Remove ${data.name}`}
+        confirmMessage="Remove"
+        dangerAction
+        closeMessage="Cancel"
+        onClose={() => {
+          setIsModalOpen(false);
+        }}
+        onConfirm={() => {
+          setIsModalOpen(false);
+          deleteAsset('product', data['@key']);
+        }}
+      >
+        <p>Are you sure you want to remove {data.name}?</p>
+        <p>This action can not be undone!</p>
+      </Modal>
     </Container>
   );
 };
