@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Button from '../../Button/Button.component';
+import CardList from '../../CardList/CardList.component';
 import { searchAsset } from '../../../services/assetsServices';
 import { ProductsContainer } from './Products.styles';
 
@@ -31,6 +32,7 @@ const Products = () => {
   return (
     <ProductsContainer>
       <Button>Add Product</Button>
+      <CardList assets={data} />
     </ProductsContainer>
   );
 };

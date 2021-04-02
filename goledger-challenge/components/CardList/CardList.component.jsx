@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from '../Card/Card.component';
-import { CardListContainer } from './CardList.styles';
+import CardListContainer from './CardList.styles';
 
 const CardList = ({ assets }) => (
   <CardListContainer>
