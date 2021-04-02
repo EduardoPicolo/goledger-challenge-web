@@ -3,6 +3,7 @@ import Head from 'next/head';
 
 import Hero from '../components/Hero/hero.component';
 import Sidebar from '../components/Sidebar/Sidebar.component';
+import Directory from '../components/Directory/Directory.component';
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <main>
         <Hero />
         <Sidebar />
+        <Directory />
       </main>
 
       <footer>
