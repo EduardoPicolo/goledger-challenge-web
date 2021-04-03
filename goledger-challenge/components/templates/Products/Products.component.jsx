@@ -11,6 +11,7 @@ import CardList from '../../CardList/CardList.component';
 import Modal from '../../Modal/Modal.component';
 import Input from '../../FormFields/Input/Input.component';
 import Select from '../../FormFields/Select/Select.component';
+import toast from '../../Toast/Toast.component';
 
 const body = (type) => ({
   query: {
@@ -27,18 +28,17 @@ const Products = () => {
     handleSubmit, register, errors, clearErrors,
   } = useForm();
 
-  const {
-    data: products,
-    isLoading,
-    isRejected,
-  } = useRequest(`${SEARCH_ASSET}products`, searchAsset(body('product')));
+  const { data: products, isLoading, isRejected } = useRequest(
+    `${SEARCH_ASSET}products`,
+    searchAsset(body('product')),
+  );
 
-  const {
-    data: sellers,
-  } = useRequest(`${SEARCH_ASSET}sellers`, searchAsset(body('seller')));
+  const { data: sellers } = useRequest(
+    `${SEARCH_ASSET}sellers`,
+    searchAsset(body('seller')),
+  );
 
   const onSubmit = handleSubmit((formData) => {
-    console.log('FORM!', formData);
     const payload = {
       ...formData,
       '@assetType': 'product',
@@ -46,7 +46,12 @@ const Products = () => {
         cnpj: formData.soldBy,
       },
     };
-    createAsset(payload);
+    createAsset(payload).then((res) => {
+      toast({
+        type: 'success',
+        message: `${res[0]?.name} was successfully added!`,
+      });
+    }).catch((error) => toast({ type: 'error', message: `An erro has occurred. ${error}` }));
   });
 
   const redirect = (id) => router.push('/product/[id]', `/product/${id}`);
@@ -125,7 +130,9 @@ const Products = () => {
           >
             {sellers?.result
               && sellers.result?.map((seller) => (
-                <option value={seller.cnpj} key={seller['@key']}>{seller.name}</option>
+                <option value={seller.cnpj} key={seller['@key']}>
+                  {seller.name}
+                </option>
               ))}
           </Select>
         </form>
