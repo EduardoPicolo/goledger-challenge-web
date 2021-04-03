@@ -10,5 +10,4 @@ const useRequest = (key, fetcher, initialData) => {
   };
 };
 
-
 export default useRequest;

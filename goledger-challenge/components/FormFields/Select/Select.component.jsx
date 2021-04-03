@@ -5,7 +5,9 @@ import { SelectContainer, CustomSelectContainer } from './Select.styles';
 import LabelContainer from '../FieldLabel.styles';
 import ErrorContainer from '../ErrorLabel.styles';
 
-const Select = ({ label, name, children, register, errors, ...otherProps }) => (
+const Select = ({
+  label, name, children, register, errors, ...otherProps
+}) => (
   <SelectContainer className="select">
     <LabelContainer htmlFor={name}>{label}</LabelContainer>
     <CustomSelectContainer
