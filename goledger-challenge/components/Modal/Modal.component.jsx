@@ -17,6 +17,7 @@ function Modal({
   closeMessage,
   confirmMessage,
   confirmType = 'button',
+  disabled,
   dangerAction,
   children,
   hidden,
@@ -38,7 +39,13 @@ function Modal({
             {closeMessage}
           </Button>
           {confirmMessage ? (
-            <Button onClick={onConfirm} type={confirmType} inverted danger={dangerAction}>
+            <Button
+              onClick={onConfirm}
+              type={confirmType}
+              inverted
+              danger={dangerAction}
+              disabled={disabled}
+            >
               {confirmMessage}
             </Button>
           ) : null}
@@ -49,6 +56,7 @@ function Modal({
 }
 
 Modal.defaultProps = {
+  disabled: false,
   onConfirm: false,
   confirmMessage: '',
   id: 'modal',
@@ -62,6 +70,7 @@ Modal.propTypes = {
   onClose: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]).isRequired,
   confirmMessage: PropTypes.string,
   onConfirm: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+  disabled: PropTypes.bool,
   children: PropTypes.arrayOf(PropTypes.element).isRequired,
 };
 

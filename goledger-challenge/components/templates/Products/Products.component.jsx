@@ -12,6 +12,9 @@ import Modal from '../../Modal/Modal.component';
 import Input from '../../FormFields/Input/Input.component';
 import Select from '../../FormFields/Select/Select.component';
 import toast from '../../Toast/Toast.component';
+import Spinner from '../../Spinner/Spinner.component';
+import Flex from '../../Container/Flex.style';
+import Row from '../../Container/Row.styles';
 
 const body = (type) => ({
   query: {
@@ -24,6 +27,7 @@ const body = (type) => ({
 const Products = () => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddingProduct, setIsAddingProduct] = useState(false);
   const {
     handleSubmit, register, errors, clearErrors,
   } = useForm();
@@ -39,6 +43,7 @@ const Products = () => {
   );
 
   const onSubmit = handleSubmit((formData) => {
+    setIsAddingProduct(true);
     const payload = {
       ...formData,
       '@assetType': 'product',
@@ -46,19 +51,18 @@ const Products = () => {
         cnpj: formData.soldBy,
       },
     };
-    createAsset(payload).then((res) => {
-      toast({
-        type: 'success',
-        message: `${res[0]?.name} was successfully added!`,
-      });
-    }).catch((error) => toast({ type: 'error', message: `An erro has occurred. ${error}` }));
+    createAsset(payload)
+      .then((res) => {
+        toast({
+          type: 'success',
+          message: `${res[0]?.name} was successfully added!`,
+        });
+      })
+      .catch((error) => toast({ type: 'error', message: `An erro has occurred. ${error}` }))
+      .finally(() => setIsAddingProduct(false));
   });
 
   const redirect = (id) => router.push('/product/[id]', `/product/${id}`);
-
-  if (isLoading) {
-    return <h1>Loading...</h1>;
-  }
 
   if (isRejected) {
     // console.error(isRejected);
@@ -67,13 +71,22 @@ const Products = () => {
 
   return (
     <ProductsContainer>
-      <Button onClick={() => setIsModalOpen(true)}>Add Product</Button>
-      <CardList assets={products.result} onClick={redirect} />
+      <Row>
+        <Button onClick={() => setIsModalOpen(true)}>Add Product</Button>
+      </Row>
+      <Flex justify="center">
+        {isLoading ? (
+          <Spinner size="100px" />
+        ) : (
+          <CardList assets={products.result} onClick={redirect} />
+        )}
+      </Flex>
       <Modal
         hidden={!isModalOpen}
         title="ADD PRODUCT"
         confirmMessage="CONFIRM"
         confirmType="submit"
+        disabled={isAddingProduct}
         closeMessage="Cancel"
         onClose={() => {
           clearErrors();
@@ -136,6 +149,7 @@ const Products = () => {
               ))}
           </Select>
         </form>
+        {isAddingProduct ? <Spinner /> : null}
       </Modal>
     </ProductsContainer>
   );
