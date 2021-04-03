@@ -1,7 +1,23 @@
-import { DELETE_ASSET, READ_ASSET, SEARCH_ASSET } from './endpoints';
+import { CREATE_ASSET, DELETE_ASSET, READ_ASSET, SEARCH_ASSET } from './endpoints';
 import api from './api';
 
-export const createAsset = () => {};
+export const createAsset = async (payload) => {
+  const body = {
+    asset: [
+      payload,
+    ],
+  };
+  const data = await api(CREATE_ASSET, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  });
+
+  return data;
+};
 
 export const updateAsset = () => {};
 
