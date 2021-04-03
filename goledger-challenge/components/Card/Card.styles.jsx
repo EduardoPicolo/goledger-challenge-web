@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 
 export const CardContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-row-gap: 0.5rem;
   padding: 2rem;
   border-radius: 5px;
-  background-color: #e5e5e9;
+  border: 1px solid #000000;
+  background: linear-gradient(to left top, #999999, 5%, #e9e9e9 95%);
   transition: all 0.3s;
 
   &:hover {
