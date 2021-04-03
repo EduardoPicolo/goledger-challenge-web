@@ -13,7 +13,6 @@ import Input from '../../FormFields/Input/Input.component';
 import Select from '../../FormFields/Select/Select.component';
 import toast from '../../Toast/Toast.component';
 import Spinner from '../../Spinner/Spinner.component';
-import Flex from '../../Container/Flex.style';
 import Row from '../../Container/Row.styles';
 
 const body = (type) => ({

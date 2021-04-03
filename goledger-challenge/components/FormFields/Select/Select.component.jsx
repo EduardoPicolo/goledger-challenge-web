@@ -30,10 +30,14 @@ const Select = ({
 Select.defaultProps = {
   errors: null,
   onChange: () => {},
+  children: undefined,
 };
 
 Select.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   register: PropTypes.func.isRequired,
