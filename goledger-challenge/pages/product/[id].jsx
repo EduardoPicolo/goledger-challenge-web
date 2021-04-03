@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { deleteAsset, readAsset } from '../../services/assetsServices';
+import { readAsset, searchAsset } from '../../services/assetsServices';
 import useRequest from '../../hooks/useRequest';
 import Flex from '../../components/Container/Flex.style';
 import Row from '../../components/Container/Row.styles';
@@ -9,36 +9,22 @@ import Button from '../../components/Button/Button.component';
 import Text from '../../components/Text/Text.styles';
 import Heading from '../../components/Text/Heading.styles';
 import formatDate from '../../utils/formatDate';
-import Modal from '../../components/Modal/Modal.component';
-import toast from '../../components/Toast/Toast.component';
 import Spinner from '../../components/Spinner/Spinner.component';
+import EditProductModal from '../../components/templates/EditProductModal/EditProductModal';
+import DeleteAssetModal from '../../components/templates/DeleteAssetModal/DeleteAssetModal.component';
 
-const Products = ({ id }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isDeletingProduct, setIsDeletingProduct] = useState(false);
-  const { data: product, isLoading, isRejected } = useRequest(
+const Products = ({ id, sellers }) => {
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const {
+    data: product, isLoading, isRejected, mutate,
+  } = useRequest(
     id,
     readAsset('product', id),
   );
 
   const router = useRouter();
-
-  const deleteProduct = () => {
-    // setIsModalOpen(false);
-    setIsDeletingProduct(true);
-    deleteAsset('product', product['@key'])
-      .then(() => {
-        toast({ type: 'success', message: 'Product removed!' });
-        router.push('/');
-      })
-      .catch((error) =>
-        toast({
-          type: 'error',
-          message: `An erro has occurred. ${error}`,
-        }),
-      )
-      .finally(() => setIsDeletingProduct(false));
-  };
 
   const loading = () => (
     <Flex justify="center" align="center" p="3rem">
@@ -66,7 +52,10 @@ const Products = ({ id }) => {
           </Text>
         </Row>
         <Row>
-          <Text>price: ${product?.price}</Text>
+          <Text>
+            price: $
+            {product?.price}
+          </Text>
         </Row>
       </Flex>
 
@@ -108,9 +97,9 @@ const Products = ({ id }) => {
             Categories
           </Text>
         </Row>
-        {(product?.categories &&
-          product?.categories.map((category) => (
-            <Row>
+        {(product?.categories
+          && product?.categories.map((category) => (
+            <Row key={category['@key']}>
               <Text>{category.name}</Text>
             </Row>
           ))) || <Text>None</Text>}
@@ -132,15 +121,19 @@ const Products = ({ id }) => {
         <Row margin="0 0 2rem" display="flex" justify="space-between">
           <Heading horizontalLine>{product?.name || 'Loading...'}</Heading>
           <Flex width="auto">
-            <Button m="0 2rem" disabled={isLoading || isDeletingProduct}>
+            <Button
+              m="0 2rem"
+              onClick={() => setIsEditModalOpen(true)}
+              disabled={isLoading}
+            >
               Edit
             </Button>
             <Button
               danger
               onClick={() => {
-                setIsModalOpen(true);
+                setIsDeleteModalOpen(true);
               }}
-              disabled={isLoading || isDeletingProduct}
+              disabled={isLoading}
             >
               Delete
             </Button>
@@ -148,36 +141,42 @@ const Products = ({ id }) => {
         </Row>
 
         {isLoading ? loading() : productInfo()}
-        <Row justify="end"><Button inverted onClick={() => router.push('/')}>Back</Button></Row>
+        <Row justify="end">
+          <Button inverted onClick={() => router.push('/')}>
+            Back
+          </Button>
+        </Row>
       </Flex>
-
-      <Modal
-        hidden={!isModalOpen}
-        title={`Delete ${product?.name}`}
-        confirmMessage="Delete"
-        dangerAction
-        disabled={isDeletingProduct}
-        closeMessage="Cancel"
-        onClose={() => {
-          setIsModalOpen(false);
-        }}
-        onConfirm={() => {
-          deleteProduct();
-        }}
-      >
-        <p>Are you sure you want to DELETE {product?.name} ?</p>
-        <p>This action can not be undone!</p>
-        {isDeletingProduct && <Spinner />}
-      </Modal>
+      <EditProductModal
+        isOpen={isEditModalOpen}
+        product={product}
+        sellers={sellers}
+        mutate={mutate}
+        onClose={() => setIsEditModalOpen(false)}
+      />
+      <DeleteAssetModal
+        isOpen={isDeleteModalOpen}
+        asset={product}
+        onClose={() => setIsDeleteModalOpen(false)}
+      />
     </Container>
   );
 };
 
 export async function getServerSideProps(ctx) {
   const { id } = ctx.query;
+  const sellers = await searchAsset({
+    query: {
+      selector: {
+        '@assetType': 'seller',
+      },
+    },
+  })();
+
   return {
     props: {
       id,
+      sellers: sellers.result,
     },
   };
 }
