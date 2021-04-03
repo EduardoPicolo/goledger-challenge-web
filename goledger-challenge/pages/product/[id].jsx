@@ -122,7 +122,7 @@ const Products = ({ id }) => {
     <Container>
       <Flex
         flexDirection="column"
-        p="5rem 3rem 0"
+        p="4rem"
         m="5rem 0 0"
         width="100%"
         borderRadius="10px"
@@ -148,6 +148,7 @@ const Products = ({ id }) => {
         </Row>
 
         {isLoading ? loading() : productInfo()}
+        <Row justify="end"><Button inverted onClick={() => router.push('/')}>Back</Button></Row>
       </Flex>
 
       <Modal
