@@ -1,11 +1,15 @@
-import { CREATE_ASSET, DELETE_ASSET, READ_ASSET, SEARCH_ASSET } from './endpoints';
+import {
+  CREATE_ASSET,
+  DELETE_ASSET,
+  READ_ASSET,
+  SEARCH_ASSET,
+  UPDATE_ASSET,
+} from './endpoints';
 import api from './api';
 
 export const createAsset = async (payload) => {
   const body = {
-    asset: [
-      payload,
-    ],
+    asset: [payload],
   };
   const data = await api(CREATE_ASSET, {
     method: 'POST',
@@ -19,7 +23,23 @@ export const createAsset = async (payload) => {
   return data;
 };
 
-export const updateAsset = () => {};
+export const updateAsset = async (payload) => {
+  const body = {
+    update: {
+      ...payload,
+    },
+  };
+  const data = await api(UPDATE_ASSET, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  });
+
+  return data;
+};
 
 export const deleteAsset = async (assetType, id) => {
   const body = {
