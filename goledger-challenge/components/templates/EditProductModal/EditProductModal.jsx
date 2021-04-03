@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 
 import Modal from '../../Modal/Modal.component';
@@ -6,33 +6,41 @@ import Input from '../../FormFields/Input/Input.component';
 import Select from '../../FormFields/Select/Select.component';
 import Spinner from '../../Spinner/Spinner.component';
 import toast from '../../Toast/Toast.component';
+import { updateAsset } from '../../../services/assetsServices';
 
-const EditProductModal = ({ isOpen, product, sellers, mutate, onClose }) => {
-  const [isEditingProduct, setIsEditingProduct] = useState(false);
-  const { handleSubmit, register, errors, formState, reset } = useForm();
+const EditProductModal = ({
+  isOpen, product, sellers, mutate, onClose,
+}) => {
+  const {
+    handleSubmit, register, errors, formState, setValue, reset,
+  } = useForm();
 
   const editProduct = handleSubmit(async (formData) => {
-    setIsEditingProduct(true);
-    // const payload = {
-    //   ...formData,
-    //   '@assetType': 'product',
-    //   soldBy: {
-    //     cnpj: formData.soldBy,
-    //   },
-    // };
-    // createAsset(payload)
-    //   .then((res) => {
-    //     mutate({ ...products, result: [...products.result, ...res] });
-    //     toast({
-    //       type: 'success',
-    //       message: `${res[0]?.name} was successfully added!`,
-    //     });
-    //   })
-    //   .catch((error) => toast({ type: 'error', message: `An erro has occurred. ${error}` }))
-    //   .finally(() => setIsAddingProduct(false));
-    const soldBy = sellers.find((seller) => seller.cnpj === formData.soldBy);
-    await mutate({ ...product, ...formData, soldBy });
-    setIsEditingProduct(false);
+    let payload = {};
+    Object.keys(formState.dirtyFields).forEach((field) => {
+      payload[field] = formData[field];
+    });
+    payload = { ...payload, '@key': product['@key'], '@assetType': 'product' };
+    if (formState.dirtyFields.soldBy) {
+      payload.soldBy = {
+        cnpj: formData.soldBy,
+      };
+    }
+
+    try {
+      const res = await updateAsset(payload);
+      toast({
+        type: 'success',
+        message: `${res?.name} was successfully updated!`,
+      });
+      const updatedProduct = await mutate({ ...product, ...res });
+      reset();
+      onClose();
+      setValue('soldBy', updatedProduct.soldBy.cnpj);
+    } catch (error) {
+      toast({ type: 'error', message: `An erro has occurred. ${error}` });
+      // console.error(error);
+    }
   });
 
   return (
@@ -40,7 +48,8 @@ const EditProductModal = ({ isOpen, product, sellers, mutate, onClose }) => {
       hidden={!isOpen}
       title={`Edit ${product?.name}`}
       confirmMessage="Confirm"
-      disabled={isEditingProduct}
+      confirmType="submit"
+      disabled={formState.isSubmitting || !formState.isDirty}
       closeMessage="Cancel"
       onClose={() => {
         onClose();
@@ -65,19 +74,6 @@ const EditProductModal = ({ isOpen, product, sellers, mutate, onClose }) => {
 
         <Input
           type="number"
-          label="code"
-          name="code"
-          defaultValue={product?.code}
-          placeholder="0000"
-          register={register({
-            required: 'Campo obrigatório',
-          })}
-          errors={errors}
-          autoComplete="off"
-        />
-
-        <Input
-          type="number"
           label="price"
           name="price"
           defaultValue={product?.price}
@@ -92,20 +88,21 @@ const EditProductModal = ({ isOpen, product, sellers, mutate, onClose }) => {
         <Select
           label="Sold by"
           name="soldBy"
+          defaultValue={product?.soldBy.cnpj}
           register={register({
             required: 'Campo obrigatório',
           })}
           errors={errors}
         >
-          {sellers &&
-            sellers.map((seller) => (
+          {sellers
+            && sellers.map((seller) => (
               <option value={seller.cnpj} key={seller['@key']}>
                 {seller.name}
               </option>
             ))}
         </Select>
       </form>
-      {isEditingProduct && <Spinner />}
+      {formState.isSubmitting && <Spinner />}
     </Modal>
   );
 };
