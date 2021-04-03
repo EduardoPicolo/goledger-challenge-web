@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 
 const CardListContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  flex-direction: row;
-  border-radius: 3px;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
 `;
 
 export default CardListContainer;

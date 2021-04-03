@@ -6,9 +6,6 @@ export const CardContainer = styled.div`
   padding: 2rem;
   border-radius: 5px;
   background-color: #e5e5e9;
-  min-width: 250px;
-  flex-basis: 26%;
-  margin-bottom: 2rem;
   transition: all 0.3s;
 
   &:hover {
