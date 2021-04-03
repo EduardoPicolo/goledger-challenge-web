@@ -1,12 +1,13 @@
 import useSWR from 'swr';
 
 const useRequest = (key, fetcher, initialData) => {
-  const { data, error } = useSWR(key, fetcher, { initialData });
+  const { data, error, mutate } = useSWR(key, fetcher, { initialData });
 
   return {
     data,
     isLoading: !error && !data,
     isRejected: error,
+    mutate,
   };
 };
 

@@ -32,7 +32,9 @@ const Products = () => {
     handleSubmit, register, errors, clearErrors,
   } = useForm();
 
-  const { data: products, isLoading, isRejected } = useRequest(
+  const {
+    data: products, isLoading, isRejected, mutate,
+  } = useRequest(
     `${SEARCH_ASSET}products`,
     searchAsset(body('product')),
   );
@@ -53,6 +55,7 @@ const Products = () => {
     };
     createAsset(payload)
       .then((res) => {
+        mutate({ ...products, result: [...products.result, ...res] });
         toast({
           type: 'success',
           message: `${res[0]?.name} was successfully added!`,
@@ -74,13 +77,11 @@ const Products = () => {
       <Row>
         <Button onClick={() => setIsModalOpen(true)}>Add Product</Button>
       </Row>
-      <Flex justify="center">
-        {isLoading ? (
-          <Spinner size="100px" />
-        ) : (
-          <CardList assets={products.result} onClick={redirect} />
-        )}
-      </Flex>
+      {isLoading ? (
+        <Row justify="center"><Spinner size="100px" width="2.5" /></Row>
+      ) : (
+        <CardList assets={products.result} onClick={redirect} />
+      )}
       <Modal
         hidden={!isModalOpen}
         title="ADD PRODUCT"
