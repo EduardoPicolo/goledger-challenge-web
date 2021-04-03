@@ -11,18 +11,20 @@ const DeleteAssetModal = ({
   const [isDeletingAsset, setIsDeletingAsset] = useState(false);
   const router = useRouter();
 
-  const deleteAssetAction = () => {
+  const deleteAssetAction = async () => {
     setIsDeletingAsset(true);
-    deleteAsset(asset['@assetType'], asset['@key'])
-      .then(() => {
-        toast({ type: 'success', message: 'Product removed!' });
-        router.push('/');
-      })
-      .catch((error) => toast({
+    try {
+      const res = await deleteAsset(asset['@assetType'], asset['@key']);
+      toast({ type: 'success', message: `${res.name} deleted!` });
+      router.back();
+    } catch (error) {
+      toast({
         type: 'error',
         message: `An erro has occurred. ${error}`,
-      }))
-      .finally(() => setIsDeletingAsset(false));
+      });
+    } finally {
+      setIsDeletingAsset(false);
+    }
   };
 
   return (
