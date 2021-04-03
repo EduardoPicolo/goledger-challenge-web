@@ -15,11 +15,8 @@ const Select = ({ label, name, children, register, errors, ...otherProps }) => (
       {...otherProps}
     >
       <option value="" hidden>
-        Type
+        Seller
       </option>
-      {/* <option value="Selecione" selected className="teste">
-        Selecione
-      </option> */}
       {children}
     </CustomSelectContainer>
     {errors[name] ? (
@@ -28,18 +25,18 @@ const Select = ({ label, name, children, register, errors, ...otherProps }) => (
   </SelectContainer>
 );
 
-// Select.defaultProps = {
-//   errors: null,
-//   onChange: () => {},
-// };
+Select.defaultProps = {
+  errors: null,
+  onChange: () => {},
+};
 
-// Select.propTypes = {
-//   children: PropTypes.arrayOf(PropTypes.element).isRequired,
-//   label: PropTypes.string.isRequired,
-//   name: PropTypes.string.isRequired,
-//   register: PropTypes.func.isRequired,
-//   errors: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object]),
-//   onChange: PropTypes.func,
-// };
+Select.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  register: PropTypes.func.isRequired,
+  errors: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object]),
+  onChange: PropTypes.func,
+};
 
 export default Select;
