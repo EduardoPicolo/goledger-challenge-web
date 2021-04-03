@@ -9,6 +9,7 @@ import Text from '../../components/Text/Text.styles';
 import Heading from '../../components/Text/Heading.styles';
 import formatDate from '../../utils/formatDate';
 import Modal from '../../components/Modal/Modal.component';
+import toast from '../../components/Toast/Toast.component';
 
 const Products = ({ id }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -60,10 +61,16 @@ const Products = ({ id }) => {
             </Text>
           </Row>
           <Row>
-            <Text>code: {data?.code}</Text>
+            <Text>
+              code:
+              {data?.code}
+            </Text>
           </Row>
           <Row>
-            <Text>price: ${data?.price}</Text>
+            <Text>
+              price: $
+              {data?.price}
+            </Text>
           </Row>
         </Flex>
 
@@ -74,16 +81,28 @@ const Products = ({ id }) => {
             </Text>
           </Row>
           <Row>
-            <Text>name: {data?.soldBy.name}</Text>
+            <Text>
+              name:
+              {data?.soldBy.name}
+            </Text>
           </Row>
           <Row>
-            <Text>cnpj: {data?.soldBy.cnpj}</Text>
+            <Text>
+              cnpj:
+              {data?.soldBy.cnpj}
+            </Text>
           </Row>
           <Row>
-            <Text>address: {data?.soldBy.address}</Text>
+            <Text>
+              address:
+              {data?.soldBy.address}
+            </Text>
           </Row>
           <Row>
-            <Text>Member since: {formatDate(data?.soldBy.dateJoined)}</Text>
+            <Text>
+              Member since:
+              {formatDate(data?.soldBy.dateJoined)}
+            </Text>
           </Row>
         </Flex>
 
@@ -93,8 +112,8 @@ const Products = ({ id }) => {
               Categories
             </Text>
           </Row>
-          {(data?.categories &&
-            data?.categories.map((category) => (
+          {(data?.categories
+            && data?.categories.map((category) => (
               <Row>
                 <Text>{category.name}</Text>
               </Row>
@@ -113,10 +132,19 @@ const Products = ({ id }) => {
         }}
         onConfirm={() => {
           setIsModalOpen(false);
-          deleteAsset('product', data['@key']);
+          deleteAsset('product', data['@key'])
+            .then(toast({ type: 'success', message: 'Product removed!' }))
+            .catch((error) => toast({
+              type: 'error',
+              message: `An erro has occurred. ${error}`,
+            }));
         }}
       >
-        <p>Are you sure you want to remove {data.name}?</p>
+        <p>
+          Are you sure you want to remove
+          {data.name}
+          ?
+        </p>
         <p>This action can not be undone!</p>
       </Modal>
     </Container>
