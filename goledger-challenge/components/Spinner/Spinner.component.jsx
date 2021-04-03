@@ -1,8 +1,8 @@
 import React from 'react';
 import StyledSpinner from './Spinner.styles';
 
-const Spinner = ({ size }) => (
-  <StyledSpinner viewBox="0 0 50 50" size={size}>
+const Spinner = ({ size, width }) => (
+  <StyledSpinner viewBox="0 0 50 50" size={size} width={width}>
     <circle
       className="path"
       cx="25"

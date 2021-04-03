@@ -8,6 +8,7 @@ const StyledSpinner = styled.svg`
 
   & .path {
     stroke: rgb(22, 160, 133);
+    stroke-width: ${(props) => props.width || '2'};
     stroke-linecap: round;
     animation: dash 1.5s ease-in-out infinite;
   }
