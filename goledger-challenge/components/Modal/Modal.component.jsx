@@ -16,6 +16,7 @@ function Modal({
   title,
   closeMessage,
   confirmMessage,
+  confirmType = 'button',
   dangerAction,
   children,
   hidden,
@@ -37,7 +38,7 @@ function Modal({
             {closeMessage}
           </Button>
           {confirmMessage ? (
-            <Button onClick={onConfirm} inverted danger={dangerAction}>
+            <Button onClick={onConfirm} type={confirmType} inverted danger={dangerAction}>
               {confirmMessage}
             </Button>
           ) : null}
