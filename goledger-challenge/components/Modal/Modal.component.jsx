@@ -71,7 +71,10 @@ Modal.propTypes = {
   confirmMessage: PropTypes.string,
   onConfirm: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
   disabled: PropTypes.bool,
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 };
 
 export default Modal;
