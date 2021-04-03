@@ -86,7 +86,7 @@ const Products = ({ id, sellers }) => {
         <Row>
           <Text>
             Member since:
-            {formatDate(product?.soldBy.dateJoined)}
+            {product?.soldBy?.dateJoined ? formatDate(product.soldBy.dateJoined) : null}
           </Text>
         </Row>
       </Flex>
