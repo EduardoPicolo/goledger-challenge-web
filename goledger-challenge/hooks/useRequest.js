@@ -6,7 +6,7 @@ const useRequest = (key, fetcher, initialData) => {
   return {
     data,
     isLoading: !error && !data,
-    isRejected: error,
+    isRejected: error?.message,
     mutate,
   };
 };
