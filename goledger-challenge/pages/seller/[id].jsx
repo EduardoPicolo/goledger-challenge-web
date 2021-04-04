@@ -12,6 +12,7 @@ import Spinner from '../../components/Spinner/Spinner.component';
 import AssetInfo from '../../components/templates/AssetInfo/AssetInfo.component';
 import EditSellertModal from '../../components/templates/EditSellerModal/EditSellerModal.component';
 import DeleteAssetModal from '../../components/templates/DeleteAssetModal/DeleteAssetModal.component';
+import ErrorTemplate from '../../components/templates/ErrorTemplate/ErrorTemplate.component';
 
 const Products = ({ id }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -31,8 +32,7 @@ const Products = ({ id }) => {
   );
 
   if (isRejected) {
-    // console.error(isRejected);
-    return <div>ERROR</div>;
+    return <ErrorTemplate message={isRejected} />;
   }
 
   const details = {

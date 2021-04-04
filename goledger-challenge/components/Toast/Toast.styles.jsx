@@ -15,6 +15,6 @@ export const ToastIconContainer = styled.div`
 
 export const ToastMessageContainer = styled.div`
   flex-grow: 1;
-  font-size: 15px;
+  font-size: 1.05rem;
   padding: 8px 12px;
 `;
