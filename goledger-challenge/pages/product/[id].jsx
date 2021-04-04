@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { readAsset, searchAsset } from '../../services/assetsServices';
 import useRequest from '../../hooks/useRequest';
-import Flex from '../../components/Container/Flex.style';
+import Flex from '../../components/Container/Flex.styles';
 import Row from '../../components/Container/Row.styles';
 import Container from '../../components/Container/Container.styles';
 import Button from '../../components/Button/Button.component';
-import Text from '../../components/Text/Text.styles';
 import Heading from '../../components/Text/Heading.styles';
 import formatDate from '../../utils/formatDate';
 import Spinner from '../../components/Spinner/Spinner.component';
+import AssetInfo from '../../components/templates/AssetInfo/AssetInfo.component';
 import EditProductModal from '../../components/templates/EditProductModal/EditProductModal';
 import DeleteAssetModal from '../../components/templates/DeleteAssetModal/DeleteAssetModal.component';
 
@@ -17,9 +17,7 @@ const Products = ({ id, sellers }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const {
-    data: product, isLoading, isRejected, mutate,
-  } = useRequest(
+  const { data: product, isLoading, isRejected, mutate } = useRequest(
     id,
     readAsset('product', id),
   );
@@ -37,75 +35,19 @@ const Products = ({ id, sellers }) => {
     return <div>ERROR</div>;
   }
 
-  const productInfo = () => (
-    <>
-      <Flex flexDirection="column" width="auto" m="0 0 2.5rem">
-        <Row margin="0 0 1rem">
-          <Text size="1.2rem" weight="700">
-            Product Details
-          </Text>
-        </Row>
-        <Row>
-          <Text>
-            code:
-            {product?.code}
-          </Text>
-        </Row>
-        <Row>
-          <Text>
-            price: $
-            {product?.price}
-          </Text>
-        </Row>
-      </Flex>
+  const sellerDetails = {
+    name: product?.soldBy.name,
+    cnpj: product?.soldBy.cnpj,
+    address: product?.soldBy.address,
+    'Member since':
+      product?.soldBy.dateJoined && formatDate(product?.soldBy.dateJoined),
+  };
 
-      <Flex flexDirection="column" width="auto" m="0 0 2.5rem">
-        <Row margin="0 0 1rem">
-          <Text size="1.2rem" weight="700">
-            Seller Details
-          </Text>
-        </Row>
-        <Row>
-          <Text>
-            name:
-            {product?.soldBy.name}
-          </Text>
-        </Row>
-        <Row>
-          <Text>
-            cnpj:
-            {product?.soldBy.cnpj}
-          </Text>
-        </Row>
-        <Row>
-          <Text>
-            address:
-            {product?.soldBy.address}
-          </Text>
-        </Row>
-        <Row>
-          <Text>
-            Member since:
-            {product?.soldBy?.dateJoined ? formatDate(product.soldBy.dateJoined) : null}
-          </Text>
-        </Row>
-      </Flex>
-
-      <Flex flexDirection="column" width="auto" m="0 0 2.5rem">
-        <Row margin="0 0 1rem">
-          <Text size="1.2rem" weight="700">
-            Categories
-          </Text>
-        </Row>
-        {(product?.categories
-          && product?.categories.map((category) => (
-            <Row key={category['@key']}>
-              <Text>{category.name}</Text>
-            </Row>
-          ))) || <Text>None</Text>}
-      </Flex>
-    </>
-  );
+  const productDetails = {
+    name: product?.name,
+    code: product?.code,
+    price: product?.price,
+  };
 
   return (
     <Container>
@@ -140,13 +82,22 @@ const Products = ({ id, sellers }) => {
           </Flex>
         </Row>
 
-        {isLoading ? loading() : productInfo()}
+        {isLoading ? (
+          loading()
+        ) : (
+          <>
+            <AssetInfo type="Product" details={productDetails} />
+            <AssetInfo type="Seller" details={sellerDetails} />
+            <AssetInfo type="Category" details={product?.categories} />
+          </>
+        )}
         <Row justify="end">
           <Button inverted onClick={() => router.back()}>
             Back
           </Button>
         </Row>
       </Flex>
+
       <EditProductModal
         isOpen={isEditModalOpen}
         product={product}
