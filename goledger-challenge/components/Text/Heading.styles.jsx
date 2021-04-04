@@ -1,8 +1,7 @@
 import styled, { css } from 'styled-components';
 
 const HorizontalLine = css`
-  border-bottom: 2px solid rgb(126, 214, 223, 0.6);
-      //rgb(22, 160, 133, 0.2)
+  border-bottom: 2px solid ${(props) => props.lineColor || 'rgb(126, 214, 223, 0.6)'};
 `;
 
 const Heading = styled.h1`

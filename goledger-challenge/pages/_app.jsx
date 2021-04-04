@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import toast from '../components/Toast/Toast.component';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/base.scss';
+import '../styles/toast.scss';
 
 // This default export is required in a new `pages/_app.js` file.
 export default function App({ Component, pageProps }) {
@@ -15,6 +16,7 @@ export default function App({ Component, pageProps }) {
     <>
       <Component {...pageProps} />
       <ToastContainer
+        position="bottom-right"
         closeButton={false}
         pauseOnFocusLoss
         pauseOnHover

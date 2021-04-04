@@ -5,6 +5,7 @@ const Text = styled.p`
   font-size: ${(props) => props.size || '1rem'};
   font-weight: ${(props) => props.weight || 500};
   text-decoration: ${(props) => props.decoration || 'none'};
+  text-transform: ${(props) => props.transform || 'none'};;
 `;
 
 export default Text;
