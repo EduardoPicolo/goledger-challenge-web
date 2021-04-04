@@ -1,5 +1,7 @@
 # [Goledger front-end challenge](https://goledger-challenge.vercel.app/)
 
+[![Vercel Status](https://img.shields.io/badge/Deploy-Vercel-lightgrey?style=for-the-badge&logo=vercel)](https://goledger-challenge-eduardopicolo.vercel.app/)
+
 ## To run the project locally in development mode:
 
 1. Clone the repository;
@@ -18,6 +20,10 @@
 
 - The app was built with Next.js because its a easy to work with framework, as exemple, every file in the pages directory is automatically converted to a route and its also easy to deploy. Next.js also comes with Serve Side Rendering (SRR) by default;
 - The request are made with SWR, a library for smart data fetching, and custom hooks to handle loading states and erros.
+
+### Demo
+
+![App running](demo.gif)
 
 ## Notes
 
