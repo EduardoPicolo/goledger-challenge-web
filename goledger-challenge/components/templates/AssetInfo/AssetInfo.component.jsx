@@ -31,7 +31,7 @@ const AssetInfo = ({ type, details }) => {
           </Row>
         ))
         : Object.entries(details).map(([key, val]) => (
-          <Row key={key}>
+          <Row key={val}>
             <Text>{`${key}: ${val}`}</Text>
           </Row>
         ))}

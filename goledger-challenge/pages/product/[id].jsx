@@ -14,7 +14,7 @@ import EditProductModal from '../../components/templates/EditProductModal/EditPr
 import DeleteAssetModal from '../../components/templates/DeleteAssetModal/DeleteAssetModal.component';
 import ErrorTemplate from '../../components/templates/ErrorTemplate/ErrorTemplate.component';
 
-const Products = ({ id, sellers }) => {
+const Products = ({ id, sellers, categories }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
@@ -104,6 +104,7 @@ const Products = ({ id, sellers }) => {
         isOpen={isEditModalOpen}
         product={product}
         sellers={sellers}
+        categories={categories}
         mutate={mutate}
         onClose={() => setIsEditModalOpen(false)}
       />
@@ -126,10 +127,19 @@ export async function getServerSideProps(ctx) {
     },
   })();
 
+  const categories = await searchAsset({
+    query: {
+      selector: {
+        '@assetType': 'category',
+      },
+    },
+  })();
+
   return {
     props: {
       id,
       sellers: sellers.result,
+      categories: categories.result,
     },
   };
 }

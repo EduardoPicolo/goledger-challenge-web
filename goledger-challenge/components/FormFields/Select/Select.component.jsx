@@ -6,7 +6,7 @@ import LabelContainer from '../FieldLabel.styles';
 import ErrorContainer from '../ErrorLabel.styles';
 
 const Select = ({
-  label, name, children, register, errors, ...otherProps
+  label, name, children, register, errors, placeholder = 'option', ...otherProps
 }) => (
   <SelectContainer className="select">
     <LabelContainer htmlFor={name}>{label}</LabelContainer>
@@ -17,7 +17,7 @@ const Select = ({
       {...otherProps}
     >
       <option value="" hidden>
-        Seller
+        {placeholder}
       </option>
       {children}
     </CustomSelectContainer>

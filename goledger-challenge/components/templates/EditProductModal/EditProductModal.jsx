@@ -9,7 +9,7 @@ import toast from '../../Toast/Toast.component';
 import { updateAsset } from '../../../services/assetsServices';
 
 const EditProductModal = ({
-  isOpen, product, sellers, mutate, onClose,
+  isOpen, product, sellers, categories, mutate, onClose,
 }) => {
   const {
     handleSubmit, register, errors, formState, setValue, reset,
@@ -25,6 +25,11 @@ const EditProductModal = ({
       payload.soldBy = {
         cnpj: formData.soldBy,
       };
+    }
+    if (formState.dirtyFields.categories) {
+      payload.categories = [{
+        name: formData.categories,
+      }];
     }
 
     try {
@@ -100,6 +105,23 @@ const EditProductModal = ({
                 {seller.name}
               </option>
             ))}
+        </Select>
+        <Select
+          label="Categories"
+          name="categories"
+          defaultValue={(product?.categories && product?.categories[0].name) || 'Category'}
+          placeholder="Category"
+          register={register({
+            required: 'Campo obrigatório',
+          })}
+          errors={errors}
+        >
+          {categories
+              && categories.map((category) => (
+                <option value={category.name} key={category['@key']}>
+                  {category.name}
+                </option>
+              ))}
         </Select>
       </form>
       {formState.isSubmitting && <Spinner />}

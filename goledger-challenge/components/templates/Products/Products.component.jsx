@@ -43,6 +43,11 @@ const Products = () => {
     searchAsset(body('seller')),
   );
 
+  const { data: categories } = useRequest(
+    `${SEARCH_ASSET}categories`,
+    searchAsset(body('category')),
+  );
+
   const onSubmit = handleSubmit((formData) => {
     setIsAddingProduct(true);
     const payload = {
@@ -51,6 +56,7 @@ const Products = () => {
       soldBy: {
         cnpj: formData.soldBy,
       },
+      categories: [{ name: formData.categories }],
     };
     createAsset(payload)
       .then((res) => {
@@ -136,6 +142,7 @@ const Products = () => {
           <Select
             label="Sold by"
             name="soldBy"
+            placeholder="Seller"
             register={register({
               required: 'Campo obrigatório',
             })}
@@ -145,6 +152,22 @@ const Products = () => {
               && sellers.result?.map((seller) => (
                 <option value={seller.cnpj} key={seller['@key']}>
                   {seller.name}
+                </option>
+              ))}
+          </Select>
+          <Select
+            label="Categories"
+            name="categories"
+            placeholder="Category"
+            register={register({
+              required: 'Campo obrigatório',
+            })}
+            errors={errors}
+          >
+            {categories?.result
+              && categories.result?.map((category) => (
+                <option value={category.name} key={category['@key']}>
+                  {category.name}
                 </option>
               ))}
           </Select>
