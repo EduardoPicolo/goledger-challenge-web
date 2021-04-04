@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { readAsset, searchAsset } from '../../services/assetsServices';
 import useRequest from '../../hooks/useRequest';
-import Flex from '../../components/Container/Flex.style';
+import Flex from '../../components/Container/Flex.styles';
 import Row from '../../components/Container/Row.styles';
 import Container from '../../components/Container/Container.styles';
 import Button from '../../components/Button/Button.component';
-import Text from '../../components/Text/Text.styles';
 import Heading from '../../components/Text/Heading.styles';
 import formatDate from '../../utils/formatDate';
 import Spinner from '../../components/Spinner/Spinner.component';
+import AssetInfo from '../../components/templates/AssetInfo/AssetInfo.component';
 import EditSellertModal from '../../components/templates/EditSellerModal/EditSellerModal.component';
 import DeleteAssetModal from '../../components/templates/DeleteAssetModal/DeleteAssetModal.component';
 
@@ -17,9 +17,7 @@ const Products = ({ id }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const {
-    data: seller, isLoading, isRejected, mutate,
-  } = useRequest(
+  const { data: seller, isLoading, isRejected, mutate } = useRequest(
     id,
     readAsset('seller', id),
   );
@@ -37,41 +35,12 @@ const Products = ({ id }) => {
     return <div>ERROR</div>;
   }
 
-  const productInfo = () => (
-    <>
-      <Flex flexDirection="column" width="auto" m="0 0 2.5rem">
-        <Row margin="0 0 1rem">
-          <Text size="1.2rem" weight="700">
-            Seller Details
-          </Text>
-        </Row>
-        <Row>
-          <Text>
-            name:
-            {seller?.name}
-          </Text>
-        </Row>
-        <Row>
-          <Text>
-            cnpj:
-            {seller?.cnpj}
-          </Text>
-        </Row>
-        <Row>
-          <Text>
-            address:
-            {seller?.address}
-          </Text>
-        </Row>
-        <Row>
-          <Text>
-            Member since:
-            {seller?.dateJoined ? formatDate(seller.dateJoined) : null}
-          </Text>
-        </Row>
-      </Flex>
-    </>
-  );
+  const details = {
+    name: seller?.name,
+    cnpj: seller?.cnpj,
+    address: seller?.address,
+    'Member since': seller?.dateJoined && formatDate(seller?.dateJoined),
+  };
 
   return (
     <Container>
@@ -106,7 +75,8 @@ const Products = ({ id }) => {
           </Flex>
         </Row>
 
-        {isLoading ? loading() : productInfo()}
+        {isLoading ? loading() : <AssetInfo type="Seller" details={details} />}
+
         <Row justify="end">
           <Button inverted onClick={() => router.back()}>
             Back

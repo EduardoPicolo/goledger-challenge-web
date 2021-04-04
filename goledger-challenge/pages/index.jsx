@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 
 import Hero from '../components/Hero/hero.component';
@@ -6,6 +7,9 @@ import Sidebar from '../components/Sidebar/Sidebar.component';
 import Directory from '../components/Directory/Directory.component';
 
 export default function Home() {
+  const router = useRouter();
+  useEffect(() => router.push('/?assetType=products', undefined, { shallow: true }), []);
+
   return (
     <div className="container">
       <Head>
@@ -19,9 +23,7 @@ export default function Home() {
         <Directory />
       </main>
 
-      <footer>
-       
-      </footer>
+      <footer></footer>
 
       <style jsx>
         {`
