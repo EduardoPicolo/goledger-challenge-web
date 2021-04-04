@@ -88,7 +88,7 @@ const Products = ({ id, sellers }) => {
           <>
             <AssetInfo type="Product" details={productDetails} />
             <AssetInfo type="Seller" details={sellerDetails} />
-            <AssetInfo type="Category" details={product?.categories} />
+            <AssetInfo type="Category" details={product?.categories || [{ name: 'None' }]} />
           </>
         )}
         <Row justify="end">
