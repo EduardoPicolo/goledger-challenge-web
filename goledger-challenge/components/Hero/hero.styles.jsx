@@ -24,7 +24,6 @@ export const HeroContainer = styled.div`
     -o-filter: blur(5px);
     -ms-filter: blur(5px);
     filter: blur(5px);
-    transform: scale(1.02); 
   }
 
   grid-column-start: 1;
@@ -43,4 +42,11 @@ export const HeroTextContainer = styled.h1`
   font-size: 4.5rem;
   color: white;
   text-shadow: 2px 2px 3px #444444;
+
+  @media (max-width: 600px) {
+    padding: 2rem;
+    font-size: 2.5rem;
+    max-width: 13ch;
+    border-bottom: none;
+  }
 `;

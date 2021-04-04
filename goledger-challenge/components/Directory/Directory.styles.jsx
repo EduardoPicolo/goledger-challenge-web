@@ -12,6 +12,12 @@ const DirectoryContainer = styled.div`
   box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
     rgba(17, 17, 26, 0.05) 0px 8px 32px;
   margin-bottom: 2rem;
+
+  @media (max-width: 600px) {
+    grid-row: 3;
+    grid-column-start: 2;
+    grid-column-end: 12;
+  }
 `;
 
 export default DirectoryContainer;
