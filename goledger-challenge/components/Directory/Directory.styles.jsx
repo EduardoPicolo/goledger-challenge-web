@@ -17,6 +17,7 @@ const DirectoryContainer = styled.div`
     grid-row: 3;
     grid-column-start: 2;
     grid-column-end: 12;
+    padding: 1rem;
   }
 `;
 

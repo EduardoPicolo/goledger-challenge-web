@@ -26,7 +26,7 @@ export const ModalInnerContainer = styled.div`
   padding: 3rem;
 
   @media (max-width: 600px) {
-    max-width: 80%;
+    max-width: 95%;
     padding: 1.5rem;
   }
 `;

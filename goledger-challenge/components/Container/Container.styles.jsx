@@ -8,7 +8,7 @@ const Container = styled.div`
   width: ${(props) => props.width || '70%'};
 
   @media (max-width: 600px) {
-    width: 90%;
+    width: 100%;
   }
 `;
 
