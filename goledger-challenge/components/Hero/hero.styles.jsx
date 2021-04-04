@@ -21,19 +21,25 @@ export const HeroContainer = styled.div`
     background-size: cover;
     height: 75vh;
     pointer-events: none;
-    -webkit-filter: blur(4px);
-    -moz-filter: blur(4px);
-    -o-filter: blur(4px);
-    -ms-filter: blur(4px);
-    filter: blur(4px);
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
     transform: scale(1.02);
+    transition: all 3s;
   }
   
   overflow: hidden;
   &:hover {
     &:before {
       transform: scale(1.15);
-      transition: transform 7s cubic-bezier(0.3, 0.45, 0.45, 0.95);
+      transition: all 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+      -webkit-filter: blur(2px);
+      -moz-filter: blur(2px);
+      -o-filter: blur(2px);
+      -ms-filter: blur(2px);
+      filter: blur(2px);
     }
   }
 

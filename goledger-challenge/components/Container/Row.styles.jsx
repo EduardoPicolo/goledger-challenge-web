@@ -6,6 +6,10 @@ const Row = styled.div`
   padding: ${(props) => props.p};
   margin: ${(props) => props.margin || '0 0 1rem'};
   width: 100%;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 export default Row;

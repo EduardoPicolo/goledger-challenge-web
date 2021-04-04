@@ -6,6 +6,10 @@ const Container = styled.div`
   justify-content: center;
   margin: 0 auto;
   width: ${(props) => props.width || '70%'};
+
+  @media (max-width: 600px) {
+    width: 90%;
+  }
 `;
 
 export default Container;

@@ -74,6 +74,11 @@ const ButtonContainer = styled.button`
   border-radius: 5px;
   margin: ${(props) => props.m};
 
+  @media (max-width: 600px) {
+    min-width: 100px;
+    padding: 1rem 1rem;
+  }
+
   &:active {
     transform: scale(0.9);
     opacity: 0.8;

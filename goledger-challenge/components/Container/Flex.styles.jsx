@@ -10,7 +10,11 @@ const Flex = styled.div`
   width: ${(props) => props.width || '100%'};
   box-shadow: ${(props) => props.shadow || 'none'};
   border-radius: ${(props) => props.borderRadius || '10px'};
-  
+
+  @media (max-width: 600px) {
+    padding: ${(props) => props.mobilePadding || props.p};
+    margin: ${(props) => props.mobileMargin || props.m};
+  }
 `;
 
 export default Flex;

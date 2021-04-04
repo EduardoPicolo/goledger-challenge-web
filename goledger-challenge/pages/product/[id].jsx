@@ -54,7 +54,9 @@ const Products = ({ id, sellers }) => {
       <Flex
         flexDirection="column"
         p="4rem"
+        mobilePadding="2rem"
         m="5rem 0 0"
+        mobileMargin="2rem 0"
         width="100%"
         borderRadius="10px"
         shadow="rgba(17, 17, 26, 0.1) 0px 4px 16px,
@@ -62,9 +64,9 @@ const Products = ({ id, sellers }) => {
       >
         <Row margin="0 0 2rem" display="flex" justify="space-between">
           <Heading horizontalLine>{product?.name || 'Loading...'}</Heading>
-          <Flex width="auto">
+          <Flex width="auto" justify="center" mobileMargin="2rem 0">
             <Button
-              m="0 2rem"
+              m="0 2rem 0 0"
               onClick={() => setIsEditModalOpen(true)}
               disabled={isLoading}
             >
