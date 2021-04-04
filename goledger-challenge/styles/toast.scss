@@ -1,0 +1,22 @@
+.Toastify__toast {
+  font-family: Overpass, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px #333;
+  padding: 0.7rem 1rem;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+
+  @media (max-width: 600px) {
+    margin: 0 auto;
+    margin-bottom: 1rem;
+    width: 80%;
+  }
+}
+.Toastify__toast--error {
+  background-color: #f74f43;
+}
+
+.Toastify__toast-container--bottom-right {
+  position: fixed;
+  bottom: 3rem;
+}
