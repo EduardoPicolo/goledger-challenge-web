@@ -6,7 +6,7 @@ import Hero from '../components/Hero/hero.component';
 import Sidebar from '../components/Sidebar/Sidebar.component';
 import Directory from '../components/Directory/Directory.component';
 import Container from '../components/Container/Container.styles';
-import MainContainer from '../components/templates/Main/Main.styles';
+import MainContainer from '../components/Container/Main.styles';
 
 export default function Home() {
   const router = useRouter();

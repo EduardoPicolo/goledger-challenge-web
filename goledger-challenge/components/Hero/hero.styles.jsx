@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export const HeroContainer = styled.div`
+  position: relative;
+
   &:before {
     content: '';
     position: absolute;
@@ -10,8 +12,8 @@ export const HeroContainer = styled.div`
     display: block;
     background-image: linear-gradient(
         to right bottom,
-        rgb(0, 0, 0, 0.75),
-        rgb(10, 10, 10, 0.35)
+        rgb(0, 0, 0, 0.8),
+        rgb(5, 5, 5, 0.4)
       ),
       url(/marketplace.jpg);
     background-position: center;
@@ -19,11 +21,20 @@ export const HeroContainer = styled.div`
     background-size: cover;
     height: 75vh;
     pointer-events: none;
-    -webkit-filter: blur(5px);
-    -moz-filter: blur(5px);
-    -o-filter: blur(5px);
-    -ms-filter: blur(5px);
-    filter: blur(5px);
+    -webkit-filter: blur(4px);
+    -moz-filter: blur(4px);
+    -o-filter: blur(4px);
+    -ms-filter: blur(4px);
+    filter: blur(4px);
+    transform: scale(1.02);
+  }
+  
+  overflow: hidden;
+  &:hover {
+    &:before {
+      transform: scale(1.15);
+      transition: transform 7s cubic-bezier(0.3, 0.45, 0.45, 0.95);
+    }
   }
 
   grid-column-start: 1;
@@ -41,7 +52,7 @@ export const HeroTextContainer = styled.h1`
   margin: 0 auto;
   font-size: 4.5rem;
   color: white;
-  text-shadow: 2px 2px 3px #444444;
+  text-shadow: 1px 1px 2px #333;
 
   @media (max-width: 600px) {
     padding: 2rem;
