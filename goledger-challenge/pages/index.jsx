@@ -10,10 +10,9 @@ import MainContainer from '../components/Container/Main.styles';
 
 export default function Home() {
   const router = useRouter();
-  useEffect(
-    () => router.push('/?assetType=products', undefined, { shallow: true }),
-    [],
-  );
+  useEffect(() => {
+    if (!router.query?.assetType) router.push('/?assetType=products', undefined, { shallow: true });
+  }, []);
 
   return (
     <Container width="100%" flexDirection="column">

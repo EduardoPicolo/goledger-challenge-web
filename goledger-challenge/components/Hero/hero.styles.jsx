@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const HeroContainer = styled.div`
   position: relative;
+  height: 75vh;
 
   &:before {
     content: '';
@@ -15,11 +16,11 @@ export const HeroContainer = styled.div`
         rgb(0, 0, 0, 0.8),
         rgb(5, 5, 5, 0.4)
       ),
-      url(/marketplace.jpg);
+      url(/marketplace.webp);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 75vh;
+    height: 100%;
     pointer-events: none;
     -webkit-filter: blur(5px);
     -moz-filter: blur(5px);
