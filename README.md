@@ -1,6 +1,4 @@
-# [Goledger front-end challenge](https://goledger-challenge.vercel.app/)
-
-[![Vercel Status](https://img.shields.io/badge/Deploy-Vercel-lightgrey?style=for-the-badge&logo=vercel)](https://goledger-challenge-eduardopicolo.vercel.app/)
+# Goledger front-end challenge
 
 ## To run the project locally in development mode:
 
@@ -11,15 +9,15 @@
    `cd goledger-challenge-web/goledger-challenge`
 
 3. Install project dependencies:  
-   `npm install` ou `yarn`
+   `npm install` or `yarn`
 
 4. Run:
-   `npm run dev` ou `yarn dev`
+   `npm run dev` or `yarn dev`
 
 ### Application
 
-- The app was built with Next.js because its a easy to work with framework, as exemple, every file in the pages directory is automatically converted to a route and its also easy to deploy. Next.js also comes with Serve Side Rendering (SRR) by default;
-- The request are made with SWR, a library for smart data fetching, and custom hooks to handle loading states and erros.
+- The app was built with Next.js because its a easy-to-work-with framework. As an exemple, every file in the pages directory is automatically converted to a route and its also easy to deploy. Next.js also comes with Serve Side Rendering (SRR) by default;
+- The requests are made with SWR, a library for smart data fetching, and custom hooks to handle loading states and errors.
 
 ### Demo
 
@@ -43,8 +41,10 @@ To standardize the JS code, Prettier was used alongside ESLint with the [Airbnb 
 
 The application has loading status and errors prevention.
 
+As the provided API uses HTTP, a deploy on Vercel or Netlify wasn't possible due to Content-Security-Policy restrictions.
+
 ### Improvement points
 
 - _Dockerize_ the application, and;
 - Create unit tests;
-- TypeScript.
+- Use TypeScript instead of JavaScript.

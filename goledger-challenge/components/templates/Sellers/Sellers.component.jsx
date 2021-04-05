@@ -6,6 +6,7 @@ import useRequest from '../../../hooks/useRequest';
 import { createAsset, searchAsset } from '../../../services/assetsServices';
 import { SEARCH_ASSET } from '../../../services/endpoints';
 import { SellersContainer } from './Sellers.styles';
+import ErrorTemplate from '../ErrorTemplate/ErrorTemplate.component';
 import Button from '../../Button/Button.component';
 import CardList from '../../CardList/CardList.component';
 import Modal from '../../Modal/Modal.component';
@@ -59,8 +60,7 @@ const Sellers = () => {
   const redirect = (id) => router.push('/seller/[id]', `/seller/${id}`);
 
   if (isRejected) {
-    // console.error(isRejected);
-    return <h1>ERROR!</h1>;
+    return <ErrorTemplate message={isRejected} />;
   }
 
   return (
